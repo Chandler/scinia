@@ -6,21 +6,21 @@ import java.util.NoSuchElementException
 object Console {
   import DbHelper._
   import Message._
-  
+
   val sqlitePath = "/Users/cabraham/code/scinia/dev.db"
   val smsPath   = "../sources/imessage/2013-12-08_to_2014-08-22.json"
   val db        = connect(sqlitePath)
   def main(args: Array[String]): Unit =
-    try {
+    // try {
       args.head match {
-        case "rebuild" => rebuildDatabase()
+        case "recreate" => recreateDatabase()
         case "loadSms" => loadSms()
+        // case "rebuild" => { recreateDatabase(); loadSms() }
       }
-    } catch {
-      case e: NoSuchElementException => println("You need to pass a command")
-      case e: scala.MatchError       => println("invalid command")
-    }
-
+    // } catch {
+    //   case e: NoSuchElementException => println("You need to pass a command")
+    //   case e: scala.MatchError       => println("invalid command")
+    // }
 
   def loadSms() =
     db.withSession { implicit session =>
@@ -30,7 +30,7 @@ object Console {
       }
     }
 
-  def rebuildDatabase() =
+  def recreateDatabase() =
     db.withSession { implicit session =>
       DbHelper().recreateTables(Tables.ddls)
     }

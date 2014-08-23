@@ -13,20 +13,25 @@ object Tables {
     def utcReceivedTime = column[String]("utcReceivedTime")
     def sourceId        = column[Int]("sourceId")
 
-    //this <> (Message.apply _).tupled stuff is black magic, TODO what is going on here?
+    //this <> (Message.apply _).tupled stuff is black magic
     def *  = (toId, fromId, content, utcReceivedTime, sourceId) <> ((Message.apply _).tupled, Message.unapply)
   }
 
   val contactsQuery = TableQuery[ContactsTable]
 
   class ContactsTable(tag: Tag) extends Table[Contact](tag, "contacts") {
-    def id         = column[Int]("id")
+    def id         = column[Int]("id", O.AutoInc)
     def identifier = column[String]("identifier")
-    def firstName  = column[String]("firstName")
-    def lastName   = column[String]("lastName")
-    def realId     = column[Int]("realId")
-    def sourceID   = column[Int]("sourceID")
-    def *  = (id, identifier, firstName, lastName, realId, sourceID) <> ((Contact.apply _).tupled, Contact.unapply)
+    def firstName  = column[String]("firstName", O.Nullable)
+    def lastName   = column[String]("lastName", O.Nullable)
+    def realId     = column[Int]("realId", O.Nullable)
+    def sourceId   = column[Int]("sourceId")
+    
+    //primary key was throwing an error so using unique index
+    // def idx        = index("idx_a", (identifier, sourceId), unique = true)
+
+    //.? means the field is an option
+    def *  = (id.?, identifier, firstName.?, lastName.?, realId.?, sourceId) <> ((Contact.apply _).tupled, Contact.unapply)
   }
 
   val ddls: Seq[DDL] = Seq(messagesQuery.ddl, contactsQuery.ddl)

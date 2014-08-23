@@ -5,10 +5,9 @@ import scala.slick.lifted.TableQuery
 import scala.slick.profile.BasicProfile
 import scala.slick.driver.SQLiteDriver.DDL
 import slick.driver.SQLiteDriver.backend.DatabaseDef
-// import slick.driver.SQLiteDriver.backend.SessionDef
 
 //the only thing that actually talks to the db..when it's passed a session of course
-class DbHelper(implicit session: Session) {
+class DbHelper()(implicit session: Session) {
   import DbHelper._
 
   def execute[T, C[_]](query: Query[T,_, C]) = query.list

@@ -17,6 +17,6 @@ object Message {
       toContact   <- Contact.findOrCreate(record.to, SMS)
       fromContact <- Contact.findOrCreate(record.from, SMS)
     } yield {
-      Message(toContact.id, fromContact.id, record.text, record.date, SMS.id)
+      Message(0, 0, record.text, record.date, SMS.id)
     }
 }
