@@ -24,7 +24,6 @@ class DbHelper()(implicit session: Session) {
   }
 }
 
-
 object DbHelper {
   def apply()(implicit session: Session) = new DbHelper()(session)
 

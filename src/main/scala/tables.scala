@@ -4,7 +4,7 @@ import scala.slick.driver.SQLiteDriver.simple._
 import scala.slick.driver.SQLiteDriver.DDL
 
 object Tables {
-  val messagesQuery = TableQuery[MessagesTable]
+  val messages = TableQuery[MessagesTable]
 
   class MessagesTable(tag: Tag) extends Table[Message](tag, "messages") {
     def toId            = column[Int]("toId")
@@ -17,7 +17,7 @@ object Tables {
     def *  = (toId, fromId, content, utcReceivedTime, sourceId) <> ((Message.apply _).tupled, Message.unapply)
   }
 
-  val contactsQuery = TableQuery[ContactsTable]
+  val contacts = TableQuery[ContactsTable]
 
   class ContactsTable(tag: Tag) extends Table[Contact](tag, "contacts") {
     def id         = column[Int]("id", O.AutoInc)
@@ -28,11 +28,11 @@ object Tables {
     def sourceId   = column[Int]("sourceId")
     
     //primary key was throwing an error so using unique index
-    // def idx        = index("idx_a", (identifier, sourceId), unique = true)
+   def idx        = index("idx_a", (identifier, sourceId), unique = true)
 
     //.? means the field is an option
     def *  = (id.?, identifier, firstName.?, lastName.?, realId.?, sourceId) <> ((Contact.apply _).tupled, Contact.unapply)
   }
 
-  val ddls: Seq[DDL] = Seq(messagesQuery.ddl, contactsQuery.ddl)
+  val ddls: Seq[DDL] = Seq(messages.ddl, contacts.ddl)
 }

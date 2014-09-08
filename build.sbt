@@ -10,7 +10,8 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "org.xerial" % "sqlite-jdbc" % "3.8.0-SNAPSHOT",
   "com.typesafe.play" %% "play-json" % "2.2.1",
-  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
+  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "com.github.nscala-time" %% "nscala-time" % "1.4.0"
 )
 
 resolvers ++= Seq(

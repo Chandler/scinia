@@ -1,8 +1,13 @@
 package com.scinia
 
-import play.api.libs.json._
 import com.scinia.Tables._
 import com.scinia.Source._
+
+import play.api.libs.json._
+import play.api.libs.json.Reads._
+import play.api.libs.functional.syntax._
+import play.api.data.validation.ValidationError
+
 /**
  * {
  *   "date": "2014-08-22 15:55:39",
@@ -10,29 +15,37 @@ import com.scinia.Source._
  *   "text": "secrets and things",
  *   "to": "Me"
  * }
+ * 
+ * Reads a JSON data source produced by /tools/sms-iphone.py
+ * Converts it into a Seq[ChatRecord] for insertion into the DB.
+ * 
+ * There's not much in here because this is pretty much the most
+ * simple loader. The JSON being loaded is already in the ChatRecord
+ * format. This is just plumbing.
+ * 
+ * See HangoutsLoader for a more complicated MessageLoader
  */
-case class SmsBackupRecord(
-  date: String,
-  from: String,
-  to:   String,
-  text: String
-)
-
-/**
- * Reads a Json data source produced by /tools/sms-iphone.py
- * Converts it into a Seq[Message] for insertion into the DB.
- */
-object SmsBackupLoader {
-  implicit val reads = Json.reads[SmsBackupRecord]
-
-  def apply(path: String): Option[Seq[SmsBackupRecord]] =
-    Json.parse(
-      io.Source.fromFile(path).getLines.mkString
-    )
-    .validate[List[SmsBackupRecord]] match {
-      case JsSuccess(records, _) => Some(records)
-      case JsError(errors)     => { println(errors); None }
+object SmsBackupLoader extends MessageLoader[IphoneSmsRecord] {
+  
+  override def toChatRecords(records: List[IphoneSmsRecord]) 
+    = records.map { r =>
+      ChatRecord(
+        date = r.date,
+        from = r.from,
+        to   = r.to,
+        text = r.text,
+        source = SMS
+      )
     }
+
+  override val reader = list[IphoneSmsRecord](Json.reads[IphoneSmsRecord])
 }
 
+// This happens to be pretty much ChatRecord minus Source
+case class IphoneSmsRecord(
+  date: String, 
+  from: String, 
+  to:   String, 
+  text: String
+)
 
