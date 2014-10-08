@@ -1,14 +1,13 @@
 package com.scinia
 
-import Source._
 import scala.slick.driver.SQLiteDriver.simple._
 
 case class Message(
-  val toId:            Int,
-  val fromId:          Int,
-  val content:         String,
-  val utcReceivedTime: String,
-  val sourceId:        Int
+  toId:            Int,
+  fromId:          Int,
+  content:         String,
+  utcReceivedTime: String,
+  sourceId:        Int
 )
 
 object Message {

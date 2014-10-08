@@ -1,10 +1,25 @@
 package com.scinia
 
+import com.scinia.LoaderId.LoaderId
 import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 import play.api.data.validation.ValidationError
-import com.scinia.Source._
+
+/**
+ * Ids for types of data sources we support or want to support
+ */
+object LoaderId extends Enumeration {
+  type LoaderId = Value
+  val SMS      = Value(1)
+  val GVOICE   = Value(2)
+  val LATITUDE = Value(3)
+  val HANGOUTS = Value(4)
+  val TWEETS   = Value(5)
+  val FACEBOOK = Value(6)
+  val RDIO     = Value(7)
+  val SKYPE    = Value(8)
+}
 
 /**
  * A completely generic model of an instant message
@@ -15,14 +30,16 @@ case class ChatRecord(
   from: String, // Whatever the primary identifier string is, e.g. phone # or name
   to:   String, // ditto
   text: String,
-  source: Source // every chat has to come from somewhere
+  source: LoaderId // every chat has to come from somewhere
 )
+
+abstract class Loader 
 
 /**
  * Base class for building loaders that convert JSON
  * from various types of IM history files into Seq[ChatRecord]
  */
-abstract class MessageLoader[A] {
+abstract class MessageLoader[A] extends Loader {
 
   /**
    * @param The path to a JSON file containing IM history
@@ -47,3 +64,4 @@ abstract class MessageLoader[A] {
    */
   def toChatRecords(records: List[A]): Seq[ChatRecord]
 }
+

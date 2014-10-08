@@ -3,6 +3,8 @@ package com.scinia
 import scala.slick.driver.SQLiteDriver.simple._
 import scala.slick.driver.SQLiteDriver.DDL
 
+// This file requires an insane amount of typing to setup a table
+// maybe I should learn macros
 object Tables {
   val messages = TableQuery[MessagesTable]
 
@@ -28,11 +30,28 @@ object Tables {
     def sourceId   = column[Int]("sourceId")
     
     //primary key was throwing an error so using unique index
-   def idx        = index("idx_a", (identifier, sourceId), unique = true)
+    def idx        = index("idx_a", (identifier, sourceId), unique = true)
 
     //.? means the field is an option
     def *  = (id.?, identifier, firstName.?, lastName.?, realId.?, sourceId) <> ((Contact.apply _).tupled, Contact.unapply)
   }
 
-  val ddls: Seq[DDL] = Seq(messages.ddl, contacts.ddl)
+
+  val songPlays = TableQuery[SongPlaysTable]
+
+  class SongPlaysTable(tag: Tag) extends Table[SongPlay](tag, "songPlays") {
+    def time         = column[String]("time")
+    def trackName    = column[String]("trackName")
+    def trackMbid    = column[String]("trackMbid", O.Nullable)
+    def artistName   = column[String]("artistName")
+    def artistMbid   = column[String]("artistMbid", O.Nullable)
+    def albumName    = column[String]("albumName", O.Nullable)
+    def albumMbid    = column[String]("albumMbid", O.Nullable)
+    def sourceId     = column[Int]("sourceId")
+    
+    //.? means the field is an option
+    def *  = (time, trackName, trackMbid.?, artistName, artistMbid.?, albumName.?, albumMbid.?, sourceId) <> ((SongPlay.apply _).tupled, SongPlay.unapply)
+  }
+
+  val ddls: Seq[DDL] = Seq(messages.ddl, contacts.ddl, songPlays.ddl)
 }

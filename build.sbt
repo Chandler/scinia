@@ -14,7 +14,12 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "1.4.0"
 )
 
+libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.0.0"
+
+libraryDependencies += "commons-io" % "commons-io" % "2.4"
+
 resolvers ++= Seq(
+  "org.catch22" at "http://marklister.github.io/product-collections/",
   "SQLite-JDBC Repository" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 )

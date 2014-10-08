@@ -6,8 +6,6 @@ import play.api.data.validation.ValidationError
 import play.api.libs.json.Reads._
 import com.github.nscala_time.time.Imports._
 
-import com.scinia.Source._
-
 import HangoutsModels._
 import HangoutsReaders._
 
@@ -35,14 +33,14 @@ object HangoutsLoader extends MessageLoader[Conversation] {
               case participant2.chatId => (participant2.name, participant1.name)
               case _                   => throw new CouldntFindSenderException()
             }
+
             ChatRecord(
               date = (event.timestamp.toLong/1000).toDateTime.toString,
               from = from,
               to   = to,
               text = event.text,
-              source = HANGOUTS
+              source = LoaderId.HANGOUTS
             )
-          
         }
       }
     }.flatten //  List[List] => List TODO make this cleaner/better/faster/strong
@@ -87,7 +85,7 @@ object HangoutsModels {
 
 /**
  * JSON Reads that each take some full or partial
- * JSON tree segment (as represented by the JsPath type)
+ * JSON abstract syntax tree (as represented by the JsPath type)
  * and convert it into a Scala type.
  *
  * Reads are composable, you can see that the higher typed
@@ -95,10 +93,10 @@ object HangoutsModels {
  * simpiler Reads like Reads[String]
  *
  * I'm not sure I like this JSON api. It's late, I've been playing with it 
- * for an entire day and I can't tell if it's brilliant or mad. The documentation
- * uses implicits and macros everywhere which makes it incredibly frustrating to
- * understand what's going on here. I've written this in a style that doesn't
- * use any implicits 
+ * for an entire day and it just seems mad. The use of 
+ * uses implicits and macros everywhere make it incredibly frustrating to
+ * understand what's going on. The following code does away with all the implicits
+ * you'll see in the the official docs.
  */
 object HangoutsReaders {
  
@@ -112,7 +110,7 @@ object HangoutsReaders {
         )(Event)
       )
     )
-  
+
   val readParticipants: Reads[(Participant,Participant)] = {
     val readSingle = 
       (

@@ -1,7 +1,6 @@
 package com.scinia
 
 import com.scinia.Tables._
-import com.scinia.Source._
 
 import play.api.libs.json._
 import play.api.libs.json.Reads._
@@ -25,7 +24,7 @@ import play.api.data.validation.ValidationError
  * 
  * See HangoutsLoader for a more complicated MessageLoader
  */
-object SmsBackupLoader extends MessageLoader[IphoneSmsRecord] {
+object SmsLoader extends MessageLoader[IphoneSmsRecord] {
   
   override def toChatRecords(records: List[IphoneSmsRecord]) 
     = records.map { r =>
@@ -34,7 +33,7 @@ object SmsBackupLoader extends MessageLoader[IphoneSmsRecord] {
         from = r.from,
         to   = r.to,
         text = r.text,
-        source = SMS
+        source = LoaderId.SMS
       )
     }
 

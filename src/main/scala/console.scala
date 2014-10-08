@@ -7,28 +7,30 @@ object Console {
   import DbHelper._
   import Message._
 
-  val sqlitePath = "/Users/cabraham/code/scinia/dev.db"
-  val smsPath   = "../sources/imessage/2013-12-08_to_2014-08-22.json"
-  val hangoutsPath = "../sources/hangouts/Hangouts.json"
-
-  val db        = connect(sqlitePath)
+  val smsPath      = "/Users/cabraham/code/sources/imessage/2013-12-08_to_2014-08-22.json"
+  val hangoutsPath = "/Users/cabraham/code/sources/hangouts/Hangouts.json"
+  val skypePath    = "/Users/cabraham/code/sources/skype/SkypeCSV.csv"
+  val lastFMPath   = "/Users/cabraham/code/sources/last.fm/data/scrobbles.tsv"
+  val voicePath    = "gvoice.json"
+  
+  val db           = connect(Config.sqlitePath)
+  
   def main(args: Array[String]): Unit =
-    // try {
-      args.head match {
-        case "recreate"     => recreateDatabase()
-        case "loadSms"      => loadSms()
-        case "loadHangouts" => loadHangouts()
-        case "all"          => all()
-      }
-    // } catch {
-    //   case e: NoSuchElementException => println("You need to pass a command")
-    //   case e: scala.MatchError       => println("invalid command")
-    // }
+    args.head match {
+      case "recreate"     => recreateDatabase()
+      case "loadSms"      => loadSms()
+      case "loadHangouts" => loadHangouts()
+      case "loadVoice"    => loadVoice()
+      case "loadSkype"    => loadSkype()
+      case "loadSongs"    => loadLastFM()
+      case "setup"    => DataSource.setupDirs(Config.sourcePath)
+      // case "all"          => all()
+    }
 
   def loadSms() =
     db.withSession { implicit session =>
       println("Loading SMS")
-      SmsBackupLoader(smsPath) match {
+      SmsLoader(smsPath) match {
         case Some(records) => Tables.messages ++= records.flatMap(toMessage)
         case _ => { println("loadSMS failed")}
       }
@@ -43,6 +45,23 @@ object Console {
       }
     }
 
+  def loadVoice() =
+    db.withSession { implicit session =>
+      println("Loading Voice")
+      Tables.messages ++= GoogleVoiceLoader(voicePath).flatMap(toMessage)
+    }
+
+  def loadSkype() =
+    db.withSession { implicit session =>
+      println("Loading Skype")
+      Tables.messages ++= SkypeLoader(skypePath).flatMap(toMessage)
+    }
+
+  def loadLastFM() = 
+    db.withSession { implicit session =>
+      println("Loading LastFM")
+      Tables.songPlays ++= LastFMLoader(lastFMPath)
+    }
 
   def recreateDatabase() =
     db.withSession { implicit session =>
@@ -50,15 +69,10 @@ object Console {
       DbHelper().recreateTables(Tables.ddls)
     }
 
-  def all() = {
-   recreateDatabase()
-   loadSms()
-   loadHangouts()
-  }
+  // def all() = {
+  //   recreateDatabase()
+  //   loadSms()
+  //   loadHangouts()
+  // }
 }
-
-
-
-
-
 

@@ -1,23 +1,18 @@
 package com.scinia
 
 import scala.slick.driver.SQLiteDriver.simple._
-import Source._
+import com.scinia.LoaderId._
+
 class MultipleContactsFoundException extends Exception
 
 case class Contact(
-  val id:         Option[Int] = None,
-  val identifier: String,
-  val firstName:  Option[String] = None,
-  val lastName:   Option[String] = None,
-  val realId:     Option[Int]    = None,
-  val sourceId:   Int
+  id:         Option[Int]    = None,
+  identifier: String,
+  firstName:  Option[String] = None,
+  lastName:   Option[String] = None,
+  realId:     Option[Int]    = None,
+  sourceId:   Int
 )
-
-// Completely static methods go in this companion object.
-object Contact {
-
-}
-
 
 // Helper methods related to queries go into the TableQuery companion object
 object contacts extends TableQuery(new Tables.ContactsTable(_)) {
@@ -25,7 +20,7 @@ object contacts extends TableQuery(new Tables.ContactsTable(_)) {
 
   def findOrCreate(
     identifier: String,
-    source: Source
+    source: LoaderId
   )(implicit session: Session): Contact = {
     this.filter( c => 
       (
