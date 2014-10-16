@@ -22,6 +22,8 @@ libraryDependencies += "joda-time" % "joda-time" % "2.0"
 
 libraryDependencies += "com.google.guava" % "guava" % "18.0"
 
+libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.3"
+
 resolvers ++= Seq(
   "org.catch22" at "http://marklister.github.io/product-collections/",
   "SQLite-JDBC Repository" at "https://oss.sonatype.org/content/repositories/snapshots",

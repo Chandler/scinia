@@ -1,0 +1,5 @@
+java.lang.IllegalArgumentException: / is not permitted as a path 'segment' for this filesystem.  Segment in question: /Users/cabraham/scinia/archive/googleVoice/16-Oct-14 01-15-16/SUCCESS.  
+If you want to create a Path from a system dependent string then use fromString.  If you want to create a child path use resolve instead of / to create the child path.  It should be noted that the string after '/' must be a single segment but resolve accepts full strings. Examples: 
+	Path.fromString("c:\a\b")
+	path / ("a/b/c", '/')
+	path resolve "a\b\c"

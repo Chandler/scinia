@@ -1,8 +1,9 @@
+package com.scinia
+
 import com.scinia.DataSource.Preprocessor
 import java.io.File
 import scala.sys.process._
 import scala.util.Try
-package com.scinia
 
 object BuildPreprocessor {
   def apply(
@@ -18,3 +19,4 @@ object BuildPreprocessor {
     }
   }
 }
+
