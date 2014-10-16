@@ -6,12 +6,17 @@ import glob
 from bs4 import BeautifulSoup
 import os
 import json
+import sys
 
 def main():
-  path = "/Users/cabraham/code/sources/voice/Calls/*Text*.html"
-  
-  with open("gvoice.json", "a") as outfile, open("errors.txt", "a") as errorsfile:
-    for filename in glob.iglob(path):
+  infilePath  = sys.argv[1]
+  outfilePath = sys.argv[2]
+
+  pathToConvos = infilePath + "/Calls/*Text*.html"
+  print(infilePath)
+  print(outfilePath)
+  with open(outfilePath, "a") as outfile:
+    for filename in glob.iglob(pathToConvos):
       try:
         with open (filename, "r") as infile:
           html = BeautifulSoup(infile.read())
@@ -43,7 +48,6 @@ def main():
           "error": str(e)
         }
         print(str(error))
-        errorsfile.write(json.dumps(error))
 
 # Files do not reliablly contain any participant info
 # The only gauranteed way to find both participants

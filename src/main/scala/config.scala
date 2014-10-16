@@ -1,4 +1,9 @@
 package com.scinia
+import scala.slick.driver.SQLiteDriver.simple._
+import java.io.File
+
+import scala.util.Try
+import Message._
 
 object Config {
   val sqlitePath        = "/Users/cabraham/code/scinia/dev.db"
@@ -22,9 +27,18 @@ object SkypeSource extends MessageSource {
 }
 
 object GoogleVoiceSource extends MessageSource {
-  override val name        = "googleVoice"
-  override val useDropZone = true
-  override val loader      = GoogleVoiceLoader
+  override val name          = "googleVoice"
+  override val useDropZone   = true
+  override val loader        = GoogleVoiceLoader
+  override val preprocessor  = Preprocessors.googleVoice
+  override val loadAndStore  = (file: File, db: Database) => {
+     Try {
+        db.withSession { implicit session =>
+         table ++= loader(file.toString).flatMap(toMessage)
+       }
+       "success"
+     }
+   }
 }
 
 object HangoutsSource extends MessageSource {

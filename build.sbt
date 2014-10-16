@@ -18,6 +18,10 @@ libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.0.0"
 
 libraryDependencies += "commons-io" % "commons-io" % "2.4"
 
+libraryDependencies += "joda-time" % "joda-time" % "2.0"
+
+libraryDependencies += "com.google.guava" % "guava" % "18.0"
+
 resolvers ++= Seq(
   "org.catch22" at "http://marklister.github.io/product-collections/",
   "SQLite-JDBC Repository" at "https://oss.sonatype.org/content/repositories/snapshots",

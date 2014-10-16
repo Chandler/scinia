@@ -2,6 +2,7 @@ package com.scinia
 
 import scala.slick.driver.SQLiteDriver.simple._
 import java.util.NoSuchElementException
+import scala.util.Try
 
 object Console {
   import DbHelper._
@@ -23,7 +24,8 @@ object Console {
       case "loadVoice"    => loadVoice()
       case "loadSkype"    => loadSkype()
       case "loadSongs"    => loadLastFM()
-      case "setup"    => DataSource.setupDirs(Config.sourcePath)
+      case "setup" => DataSource.setupDirs(Config.sourcePath)
+      case "test"  => GoogleVoiceSource("/Users/cabraham/scinia/dropZone/googleVoice/voice", db)
       // case "all"          => all()
     }
 
