@@ -1,22 +1,21 @@
 package com.scinia
 
-import com.scinia.DataSource.Preprocessor
 import java.io.File
 import scala.sys.process._
 import scala.util.Try
 
 object BuildPreprocessor {
+  type Preprocessor = (File, File) => Try[File]
+
   def apply(
-    command: Seq[String]
+    command: (String,String) => Seq[String]
   ): Preprocessor = (srcFile, outputDir) => {
     val outFile = new File(outputDir, "/processed")
-    val args = Seq(srcFile.toString, outFile.toString)
     Try {
-      (command ++ args).! match {
+      (command(srcFile.toString, outFile.toString)).! match {
         case 0 => outFile
         case _ => throw new Exception("Preprocessing failed") 
       }
     }
   }
 }
-

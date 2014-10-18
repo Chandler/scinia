@@ -17,7 +17,7 @@ object LastFMLoader extends Loader {
 
   def apply(path: String): Seq[SongPlay] =
      IOSource
-      .fromFile(path)
+      .fromFile(s"$path/data/scrobbles.tsv")
       .getLines
       .toList
       .flatMap { line =>

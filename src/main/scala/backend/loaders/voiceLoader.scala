@@ -15,7 +15,6 @@ object GoogleVoiceLoader extends Loader {
 
   def apply(path: String): Seq[ChatRecord] =
     io.Source.fromFile(path).getLines.toSeq.flatMap { line =>
-      println(line)
       Json.parse(line)
         .validate[ChatRecord](reader) match {
           case JsSuccess(record, _) => Some(toChatRecord(record))

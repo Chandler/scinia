@@ -1,7 +1,5 @@
 package com.scinia
 
-import Source._
-
 // we can get away without mbids and albums
 // but timestamp track and artist are required.
 case class SongPlay(
