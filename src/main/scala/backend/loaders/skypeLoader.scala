@@ -24,7 +24,7 @@ case class NoParticipantsFoundException(msg: String) extends Exception(msg)
  * http://www.nirsoft.net/utils/skype_log_view.html
  * demo record: List(12271, Chat Message, 2/20/2008 11:11:28 PM, shticko, Joel, , watching a video, #shticko/$cbabraham;a5cdccf946726ca8, )
  */
-object SkypeLoader extends Loader {
+object SkypeLoader extends Loader[ChatRecord] {
   
   // The tototoshi.csv doesn't support reading strings, it only supports reading in files
   // I wanted to read the CSV file myself line by line and parse the strings, so I'm using the
@@ -33,7 +33,7 @@ object SkypeLoader extends Loader {
   def parseLine(line: String): Try[List[String]] = Try { parser.parseLine(new CharSequenceReader(line, 0)).get }
 
   // skype file is pretty big so print out some progress reports
-  def apply(path: String): Seq[ChatRecord] =
+  override def apply(path: String): Seq[ChatRecord] =
     IOSource
       .fromFile(path, "ISO-8859-1")
       .getLines

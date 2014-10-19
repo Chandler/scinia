@@ -11,7 +11,7 @@ import HangoutsReaders._
 
 class CouldntFindSenderException extends Exception
 
-object HangoutsLoader extends MessageLoader[Conversation] {
+object HangoutsLoader extends JsonMessageLoader[Conversation] {
 
   override val reader: Reads[List[Conversation]] = readConversations
 

@@ -10,13 +10,13 @@ case class Message(
   sourceId:        Int
 )
 
-object Message {
+object Message extends Log {
   def toMessage(record: ChatRecord)(implicit session: Session): Option[Message] =
     for {
       toId   <- contacts.findOrCreate(record.to, record.source).id
       fromId <- contacts.findOrCreate(record.from, record.source).id
     } yield {
-      println(record.date + " " + record.text)
+      logger.debug(record.date + " " + record.text)
       Message(toId, fromId, record.text, record.date, record.source.id)
     }
 }

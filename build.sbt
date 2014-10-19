@@ -2,23 +2,30 @@ name := "scinia"
 
 version := "0.1"
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.11.0"
 
-libraryDependencies ++= Seq(
-  "com.typesafe.slick" %% "slick" % "2.1.0",
-  "com.typesafe.slick" %% "slick-codegen" % "2.1.0-RC3",
-  "org.slf4j" % "slf4j-nop" % "1.6.4",
-  "org.xerial" % "sqlite-jdbc" % "3.8.0-SNAPSHOT",
-  "com.typesafe.play" %% "play-json" % "2.2.1",
-  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
-  "com.github.nscala-time" %% "nscala-time" % "1.4.0"
-)
+libraryDependencies += "com.typesafe.slick" %% "slick" % "2.1.0"
+
+libraryDependencies += "com.typesafe.slick" %% "slick-codegen" % "2.1.0-RC3"
+
+
+libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.8.0-SNAPSHOT"
+
+libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "1.4.0"
+
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0"
+
+libraryDependencies +=  "com.typesafe.play" %% "play-json" % "2.3.0"
 
 libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.0.0"
 
-libraryDependencies += "commons-io" % "commons-io" % "2.4"
+// libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.6.4"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
 
 libraryDependencies += "joda-time" % "joda-time" % "2.0"
+
+// lol yes I'm using three io libraries. for now. step off me.
+libraryDependencies += "commons-io" % "commons-io" % "2.4"
 
 libraryDependencies += "com.google.guava" % "guava" % "18.0"
 
@@ -30,4 +37,3 @@ resolvers ++= Seq(
   "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 )
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")

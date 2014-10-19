@@ -24,7 +24,7 @@ import play.api.data.validation.ValidationError
  * 
  * See HangoutsLoader for a more complicated MessageLoader
  */
-object SmsLoader extends MessageLoader[IphoneSmsRecord] {
+object SmsLoader extends JsonMessageLoader[IphoneSmsRecord] {
   
   override def toChatRecords(records: List[IphoneSmsRecord]) 
     = records.map { r =>

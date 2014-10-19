@@ -13,8 +13,7 @@ def main():
   outfilePath = sys.argv[2]
 
   pathToConvos = infilePath + "/Calls/*Text*.html"
-  print(infilePath)
-  print(outfilePath)
+
   with open(outfilePath, "a") as outfile:
     for filename in glob.iglob(pathToConvos):
       try:

@@ -11,11 +11,15 @@ import scala.util.control.Breaks._
 import scala.io.{ Source => IOSource }
 import scala.util.parsing.input.CharSequenceReader
 
-object LastFMLoader extends Loader {
+object LastFMLoader extends Loader[SongPlay] {
   val parser = new CSVParser(new TSVFormat {})
-  def parseLine(line: String): Try[List[String]] = Try { parser.parseLine(new CharSequenceReader(line, 0)).get }
+  
+  def parseLine(line: String): Try[List[String]] = 
+    Try { 
+      parser.parseLine(new CharSequenceReader(line, 0)).get
+    }
 
-  def apply(path: String): Seq[SongPlay] =
+  override def apply(path: String): Seq[SongPlay] =
      IOSource
       .fromFile(s"$path/data/scrobbles.tsv")
       .getLines

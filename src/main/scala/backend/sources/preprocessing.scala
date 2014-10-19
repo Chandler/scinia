@@ -3,6 +3,7 @@ package com.scinia
 import java.io.File
 import scala.sys.process._
 import scala.util.Try
+import com.scinia.DataSource.Preprocessor
 
 object BuildPreprocessor {
   type Preprocessor = (File, File) => Try[File]
@@ -18,4 +19,42 @@ object BuildPreprocessor {
       }
     }
   }
+}
+
+object Preprocessors {
+ 
+ /**
+  * The google voice source file is HTML so It's easier
+  * To use a python preprocessor with the beautiful soup 
+  * library to parse it
+  */
+  val googleVoice =
+    BuildPreprocessor( (input: String, output: String) => 
+      Seq(
+        "python", 
+        "src/main/python/backend/preprocessors/voiceTransformer.py",
+        input,
+        output
+      )
+    )
+
+ /**
+  * Use an existing open source iphone database extractor
+  * To convert an iphone sms backup database into JSON
+  */
+  val iphoneBackup =
+    BuildPreprocessor( (input: String, output: String) => 
+      Seq(
+        "python", 
+        "tools/sms-backup.py",
+        "--format",
+        "json",
+        "--date-format",
+        "'%Y-%m-%dT%H:%M:%S'",
+        "--input",
+        input,
+        "--output",
+        output
+      )
+    )
 }

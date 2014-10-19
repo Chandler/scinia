@@ -1,0 +1,20 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level %date{HH:mm:ss} %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>/tmp/scinia.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-5level %date{HH:mm:ss} %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender> -->
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+<!--         <appender-ref ref="FILE" />
+ -->    </root>
+</configuration>

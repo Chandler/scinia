@@ -3,6 +3,7 @@ package com.scinia
 import com.scinia.Tables._
 // import com.scinia.CommonReads._
 import com.scinia.LoaderId._
+import com.typesafe.scalalogging.LazyLogging
 
 import play.api.libs.json._
 import play.api.libs.json.Reads._
@@ -11,18 +12,19 @@ import play.api.data.validation.ValidationError
 
 // We use python preprocessing to on the google voice data, so
 // it doesn't need any special logic, it maps straight to ChatRecord
-object GoogleVoiceLoader extends Loader {
+object GoogleVoiceLoader extends Loader[ChatRecord] {
 
-  def apply(path: String): Seq[ChatRecord] =
+  override def apply(path: String): Seq[ChatRecord] =
     io.Source.fromFile(path).getLines.toSeq.flatMap { line =>
       Json.parse(line)
         .validate[ChatRecord](reader) match {
           case JsSuccess(record, _) => Some(toChatRecord(record))
-          case JsError(errors)      => { println(errors); None}
+          case JsError(errors) =>
+            logger.debug(s"could not parse $path: $errors")
+            None
         }
     }
 
-  
   def toChatRecord(record: ChatRecord) = record
 
   // an implicit reads for the type LoaderId which is the only non native field in a ChatRecord

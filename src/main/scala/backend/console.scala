@@ -4,11 +4,9 @@ import scala.slick.driver.SQLiteDriver.simple._
 import java.util.NoSuchElementException
 import scala.util.Try
 
-// This is a debugging console specific to Chandler's Scinia configuration
-
-object Console {
+// Work in progress console for kicking off runs and database operations
+object Console extends Log {
   import DbHelper._
-  import Message._
 
   val db = connect(Config.sqlitePath)
 
@@ -16,8 +14,8 @@ object Console {
     try {
       args.head match {
         case "recreate" => recreateDatabase()
-        case "setup"  => DataSource.setupDirs(Config.sourcePath)
-        case "process" => processSourceFile(args(1), args(2))
+        case "setup"    => DataSource.setupDirs(Config.sourcePath)
+        case "process"  => processSourceFile(args(1), args(2))
       }
     } catch {
       case ex: Exception => println(ex)
