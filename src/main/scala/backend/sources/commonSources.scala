@@ -1,10 +1,9 @@
 package com.scinia
 
-import scala.slick.driver.SQLiteDriver.simple._
-import java.io.File
-import scala.util.Try
-import Message._
 import com.scinia.DataSource.Processor
+import java.io.File
+import scala.slick.driver.SQLiteDriver.simple._
+import scala.util.Try
 
 object SkypeSource extends MessageSource {
   override val name       = "skype"

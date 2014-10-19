@@ -1,20 +1,18 @@
 package com.scinia
 
-import com.scinia.Tables.MessagesTable
-import org.apache.commons.io.FileUtils.forceMkdir
 import com.google.common.io.Files.{move, copy}
+import com.scinia.Config.sourcePath
+import com.scinia.Tables.MessagesTable
 import java.io.File
-import scala.util.Try
-import scala.util.Success
-import scala.util.Failure
+import java.nio.file.Files
+import java.util.Date
+import Message._
+import org.apache.commons.io.FileUtils.forceMkdir
 import org.joda.time.DateTime
 import scala.slick.driver.SQLiteDriver.simple._
 import scala.slick.lifted.TableQuery
-import java.util.Date
-import java.nio.file.Files
+import scala.util.{Failure, Success, Try}
 import scalax.file.Path
-import com.scinia.Config.sourcePath
-import Message._
 
 /**
  * A DataSource is a unqiue set of data that we want the system to be 

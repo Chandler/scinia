@@ -1,9 +1,9 @@
 package com.scinia
 
+import com.scinia.DataSource.Preprocessor
 import java.io.File
 import scala.sys.process._
 import scala.util.Try
-import com.scinia.DataSource.Preprocessor
 
 object BuildPreprocessor {
   type Preprocessor = (File, File) => Try[File]
