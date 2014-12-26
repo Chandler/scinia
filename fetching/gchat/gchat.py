@@ -229,7 +229,3 @@ def plot_chat_volume(chats):
     fig.autofmt_xdate()
 
     pyplot.show()
-
-logger = GChatLogs(user='cbabraham@gmail.com', passwd='plzymlzjvsdxurws')
-
-convert("all_old_school_gchats")
