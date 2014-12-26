@@ -1,13 +1,13 @@
 Scinia is an analytics framework to help me make charts and graphs about my life.
 
-Peices 
+Components: 
   * fetching:   Scripts to download interesting data from devices and websites [ComingSoon™]
   * processing: An appliation that parses raw data formats and loads everything into a database. Also mang
   * web:        A static website with various visualizations projects and scripts to generate visualization data from the processing db.
 
 The goal here is to transition from one-off scripts that generate 1 graph, to a whole suite of reusable components that make it easy for me to create vizualization projects that can be automatically updated.
 
-data sources:
+Data Sources:
   * Google Hangouts Chat
   * Google Chat (pre-2014)
   * Google Voice
