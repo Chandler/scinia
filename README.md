@@ -8,15 +8,15 @@ Peices
 The goal here is to transition from one-off scripts that generate 1 graph, to a whole suite of reusable components that make it easy for me to create vizualization projects that can be automatically updated.
 
 data sources:
-  Google Hangouts Chat
-  Google Chat (pre-2014)
-  Google Voice
-  Skype
-  iPhone messages backup (iMessage and SMS)
-  LastFM scrobbles
-  Facebook Chat [ComingSoon™]
-  Foursquare/Swarm Checkins [ComingSoon™]
-  Google Latitude [ComingSoon™]
+  * Google Hangouts Chat
+  * Google Chat (pre-2014)
+  * Google Voice
+  * Skype
+  * iPhone messages backup (iMessage and SMS)
+  * LastFM scrobbles
+  * Facebook Chat [ComingSoon™]
+  * Foursquare/Swarm Checkins [ComingSoon™]
+  * Google Latitude [ComingSoon™]
 
 
 Scinia is the 3rd interation of this project, here are my previous attempts at something like this:
