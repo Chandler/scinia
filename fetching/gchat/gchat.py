@@ -1,3 +1,4 @@
+# https://github.com/paykroyd/chats
 # Read chats from gmail's imap interface then put together some stats
 from collections import Counter, OrderedDict
 
