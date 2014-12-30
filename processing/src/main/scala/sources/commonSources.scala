@@ -38,6 +38,13 @@ object GChatSource extends MessageSource {
   override val preprocessor = Preprocessors.gchat
 }
 
+object FacebookSource extends MessageSource {
+  override val name         = "facebook"
+  override val manageRuns   = true
+  override val loader       = FacebookLoader
+  override val preprocessor = Preprocessors.facebook
+}
+
 object LastFMSource extends DataSource {
   override val name                     = "lastfm"
   override val manageRuns               = true

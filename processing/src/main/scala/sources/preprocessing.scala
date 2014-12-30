@@ -29,22 +29,24 @@ object BuildPreprocessor extends Log {
       }
     }
   }
-
-  def simplePythonPreprocessor(filePath: String) =
-    BuildPreprocessor((input: String, output: String) => 
-      Seq("python", file, input, output))
 }
 
 object Preprocessors {
+
+  def simplePythonPreprocessor(script: String) =
+    BuildPreprocessor((input: String, output: String) => 
+      Seq("python", script, input, output))
  
  /**
   * The google voice source file is HTML so It's easier
   * To use a python preprocessor with the beautiful soup 
   * library to parse it
   */
-  val googleVoice = simplePythonPreprocessor("src/main/python/preprocessors/voiceTransformer.py")
+  val googleVoice  = simplePythonPreprocessor("src/main/python/preprocessors/voiceTransformer.py")
 
-  val gchat = simplePythonPreprocessor("src/main/python/preprocessors/gchatTransformer.py")
+  val gchat        = simplePythonPreprocessor("src/main/python/preprocessors/gchatTransformer.py")
+
+  val facebook     = simplePythonPreprocessor("src/main/python/preprocessors/facebookTransformer.py")
 
  /**
   * Use an existing open source iphone database extractor

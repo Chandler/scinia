@@ -9,7 +9,7 @@ var watchr = require('watchr');
 var sys    = require('sys')
 var exec   = require('child_process').exec;
 
-var path   = '/Users/cabraham/scinia/dropZone'
+var path   = '/Users/cabraham/devscinia/dropZone'
 
 function puts(error, stdout, stderr) { sys.puts(stdout) }
 

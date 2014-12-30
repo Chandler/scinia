@@ -1,15 +1,12 @@
 package com.scinia
 
-import com.scinia.Tables._
-// import com.scinia.CommonReads._
-
-
-import java.io._
 import com.github.tototoshi.csv._
-import scala.util.Try
-import scala.util.control.Breaks._
+import com.scinia.Tables._
+import java.io._
 import scala.io.{ Source => IOSource }
+import scala.util.control.Breaks._
 import scala.util.parsing.input.CharSequenceReader
+import scala.util.Try
 
 object LastFMLoader extends Loader[SongPlay] {
   val parser = new CSVParser(new TSVFormat {})
