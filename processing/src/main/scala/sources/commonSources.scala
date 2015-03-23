@@ -60,3 +60,20 @@ object LastFMSource extends DataSource {
       } 
    }
 }
+
+object GoogleSearchSource extends DataSource {
+  override val name         = "google_search"
+  override val manageRuns   = true
+  override val loader: Loader[SearchQuery] = GoogleSearchLoader
+  override val preprocessor = Preprocessors.googleSearch
+  override val table        = Tables.searches
+  override val loadAndStore: Processor = (file: File, db: Database) =>
+    Try {
+      db.withSession { implicit session =>
+        val records = loader(file.toString)
+        Log("about to store " + records.size + " Google Searches into the searches table")
+        table ++= records
+        Log("completed db store")
+      } 
+   }
+}

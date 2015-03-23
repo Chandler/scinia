@@ -48,6 +48,9 @@ object Preprocessors {
 
   val facebook     = simplePythonPreprocessor("src/main/python/preprocessors/facebookTransformer.py")
 
+  val googleSearch = simplePythonPreprocessor("src/main/python/preprocessors/googleSearchTransformer.py")
+
+
  /**
   * Use an existing open source iphone database extractor
   * To convert an iphone sms backup database into JSON

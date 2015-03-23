@@ -15,6 +15,7 @@ object Console extends Log {
   def main(args: Array[String]): Unit =
     try {
       args.head match {
+        case "createTables" => createTables()
         case "recreate" => recreateDatabase()
         case "setup"    => DataSource.setupDirs(Config.sourcePath)
         case "process"  => processSourceFile(args(1), args(2))
@@ -31,6 +32,11 @@ object Console extends Log {
       .find(_.name == sourceName.trim)
       .map(source => source(filePath, db))
   }
+
+  def createTables() =
+    db.withSession { implicit session =>
+      DbHelper().createTables(Tables.ddls)
+    } 
 
   def recreateDatabase() =
     db.withSession { implicit session =>

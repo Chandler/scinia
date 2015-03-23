@@ -60,7 +60,7 @@ trait DataSource extends Log {
   // A method to take the output of this sources loader and 
   // store it in this sources table.
   val loadAndStore: Processor = DoNothing
- 
+
   /**
    * Entry point for starting a run. At the highlest level a run takes a 
    * file and loads that file into the database. If manageRuns=true 

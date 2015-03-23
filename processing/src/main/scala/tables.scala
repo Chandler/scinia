@@ -15,7 +15,6 @@ object Tables {
     def utcReceivedTime = column[String]("utcReceivedTime")
     def sourceId        = column[Int]("sourceId")
 
-
     //primary key was throwing an error so using unique index
     def idx             = index("idx_a", (toId, fromId, content, utcReceivedTime), unique = true)  
 
@@ -40,7 +39,6 @@ object Tables {
     def *  = (id.?, identifier, firstName.?, lastName.?, realId.?, sourceId) <> ((Contact.apply _).tupled, Contact.unapply)
   }
 
-
   val songPlays = TableQuery[SongPlaysTable]
 
   class SongPlaysTable(tag: Tag) extends Table[SongPlay](tag, "songPlays") {
@@ -57,5 +55,16 @@ object Tables {
     def *  = (time, trackName, trackMbid.?, artistName, artistMbid.?, albumName.?, albumMbid.?, sourceId) <> ((SongPlay.apply _).tupled, SongPlay.unapply)
   }
 
-  val ddls: Seq[DDL] = Seq(messages.ddl, contacts.ddl, songPlays.ddl)
+  val searches = TableQuery[SearchesTable]
+
+  class SearchesTable(tag: Tag) extends Table[SearchQuery](tag, "searches") {
+    def date         = column[String]("date")
+    def query        = column[String]("query")
+    def sourceId     = column[Int]("sourceId")
+    
+    //.? means the field is an option
+    def *  = (date, query, sourceId) <> ((SearchQuery.apply _).tupled, SearchQuery.unapply)
+  }
+
+  val ddls: Seq[DDL] = Seq(messages.ddl, contacts.ddl, songPlays.ddl, searches.ddl)
 }

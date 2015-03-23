@@ -11,12 +11,14 @@ import HangoutsReaders._
 
 class CouldntFindSenderException extends Exception
 
-object HangoutsLoader extends JsonMessageLoader[Conversation] {
+object HangoutsLoader extends LoadRecordContainingObject[ChatRecord] {
 
-  override val reader: Reads[List[Conversation]] = readConversations
+  val reader: Reads[List[Conversation]] = readConversations
 
-  override def toChatRecords(records: List[Conversation]) = {
-    records.flatMap { conversation =>
+  def parse(obj: String): List[ChatRecord] = transform(ParseJson.parseJsonList(obj, reader))
+
+  def transform(conversations: List[Conversation]): List[ChatRecord] =
+    conversations.flatMap { conversation =>
       // If there's no participants field drop record
       // not every event in chat is a valid text event and 
       // text is all we care about right now
@@ -43,8 +45,9 @@ object HangoutsLoader extends JsonMessageLoader[Conversation] {
             )
         }
       }
-    }.flatten //  List[List] => List TODO make this cleaner/better/faster/strong
-  }
+    }.flatten
+    // flatten because we are turning a list of converstions (list of lists) into
+    // a single list of records.
 }
 
 /**
