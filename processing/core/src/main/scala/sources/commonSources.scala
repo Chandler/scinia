@@ -5,47 +5,47 @@ import java.io.File
 import scala.slick.driver.SQLiteDriver.simple._
 import scala.util.Try
 
-object SkypeSource extends MessageSource {
+case class SkypeSource(val projectPath: String) extends MessageSource {
   override val name       = "skype"
   override val manageRuns = false
   override val loader     = SkypeLoader
 }
 
-object GoogleVoiceSource extends MessageSource {
+case class GoogleVoiceSource(val projectPath: String) extends MessageSource {
   override val name         = "googleVoice"
   override val manageRuns   = true
   override val loader       = GoogleVoiceLoader
   override val preprocessor = Preprocessors.googleVoice
 }
 
-object HangoutsSource extends MessageSource {
+case class HangoutsSource(val projectPath: String) extends MessageSource {
   override val name       = "hangouts"
   override val manageRuns = true
   override val loader     = HangoutsLoader
 }
 
-object IPhoneBackupSource extends MessageSource {
+case class IPhoneBackupSource(val projectPath: String) extends MessageSource {
   override val name         = "sms"
   override val manageRuns   = true
   override val loader       = SmsLoader
   override val preprocessor = Preprocessors.iphoneBackup
 }
 
-object GChatSource extends MessageSource {
+case class GChatSource(val projectPath: String) extends MessageSource {
   override val name         = "gchat"
   override val manageRuns   = false
   override val loader       = GChatLoader
   override val preprocessor = Preprocessors.gchat
 }
 
-object FacebookSource extends MessageSource {
+case class FacebookSource(val projectPath: String) extends MessageSource {
   override val name         = "facebook"
   override val manageRuns   = true
   override val loader       = FacebookLoader
   override val preprocessor = Preprocessors.facebook
 }
 
-object LastFMSource extends DataSource {
+case class LastFMSource(val projectPath: String) extends DataSource {
   override val name                     = "lastfm"
   override val manageRuns               = true
   override val loader: Loader[SongPlay] = LastFMLoader
@@ -61,7 +61,7 @@ object LastFMSource extends DataSource {
    }
 }
 
-object GoogleSearchSource extends DataSource {
+case class GoogleSearchSource(val projectPath: String) extends DataSource {
   override val name         = "google_search"
   override val manageRuns   = true
   override val loader: Loader[SearchQuery] = GoogleSearchLoader

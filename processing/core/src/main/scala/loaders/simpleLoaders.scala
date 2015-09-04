@@ -8,6 +8,7 @@ import play.api.data.validation.ValidationError
 
 import com.scinia.Tables._
 import com.typesafe.scalalogging.LazyLogging
+import scala.util.Try
 
 trait ChatRecordLoader 
   extends loadDelimitedRecords[ChatRecord]
